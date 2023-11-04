@@ -4,18 +4,18 @@ VENV := venv
 # default target, when make executed without arguments
 all: venv
 
-$(VENV)/bin/activate: requirements.txt
+$(VENV)/bin/activate:
 	python3 -m venv $(VENV)
-	./$(VENV)/bin/pip install -r requirements.txt
+	./$(VENV)/bin/python3 setup.py install
 
 # venv is a shortcut target
 venv: $(VENV)/bin/activate
 
-test: venv
-	./$(VENV)/bin/pytest
+tests: venv
+	./$(VENV)/bin/python3 -m unittest tests.test_crawler
 
 run: venv
-	./$(VENV)/bin/python3 pySpider.py
+	./$(VENV)/bin/python3 spider
 
 clean:
 	rm -rf $(VENV)
