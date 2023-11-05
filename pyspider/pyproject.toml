@@ -1,0 +1,29 @@
+[build-system]
+requires = [
+    "hatchling",
+    "pytest"
+]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+
+[project]
+name = "three_spiders"
+version = "0.0.1"
+authors = [
+    { name="Adam Keefer", email="adamjkeefer@gmail.com" },
+]
+description = "Python Web Crawler"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/adakeefer/threeSpiders"

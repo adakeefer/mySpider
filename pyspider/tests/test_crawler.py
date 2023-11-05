@@ -1,12 +1,12 @@
-import unittest
-from spider import crawler
+import sys
+import three_spiders.crawler as crawler
 
 
-class MyTestCase(unittest.TestCase):
-    def says_hello(self):
-        crawler = crawler.Crawler()
-        self.assertEqual(crawler.say_hi(), "Hello!")
+def update_path():
+    sys.path.append("src/three_spiders")
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_crawler_says_hello():
+    update_path()
+    test_crawler = crawler.Crawler()
+    assert test_crawler.say_hi() is None
