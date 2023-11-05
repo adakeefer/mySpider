@@ -1,13 +1,17 @@
 [build-system]
 requires = [
     "hatchling",
-    "pytest"
+    "pytest",
+    "pika"
 ]
 build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
 addopts = [
     "--import-mode=importlib",
+]
+pythonpath = [
+    "src"
 ]
 
 [project]

@@ -2,4 +2,6 @@ from crawler import Crawler
 
 if __name__ == "__main__":
     # inspect sys.argv here
-    Crawler().say_hi()
+    crawler = Crawler()
+    crawler.say_hi()
+    crawler.connect()

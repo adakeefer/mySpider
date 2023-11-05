@@ -1,7 +1,6 @@
 # define the name of the virtual environment directory
 VENV := venv
 
-# default target, when make executed without arguments
 all: venv
 
 $(VENV)/bin/activate:
@@ -15,13 +14,16 @@ install:
 	pip install -e .
 
 tests:
-	python3 -m pytest
+	./$(VENV)/bin/python3 -m pytest
+
+rabbitmq:
+	docker run -d --hostname rabbit --name rabbit rabbitmq:3
 
 run: venv
-	./$(VENV)/bin/python3 src/three_spiders
+	./$(VENV)/bin/python3 src
 
 clean:
 	rm -rf $(VENV)
 	find . -type f -name '*.pyc' -delete
 
-.PHONY: all install venv tests run clean
+.PHONY: all install venv tests rabbitmq run clean
