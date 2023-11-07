@@ -1,23 +1,17 @@
-import pika
+import boto3
+from botocore.config import Config
 
 
 class QueueManager:
     def __init__(self):
-        self.connection = self.open_connection()
-        self.channel = self.connection.channel()
-        self.create_queues()
-
-    def __del__(self):
-        self.connection.close()
-
-    def open_connection(self):
-        return pika.BlockingConnection(pika.ConnectionParameters("localhost"))
-
-    def create_queues(self):
-        self.channel.queue_declare(queue="hello")
-
-    def say_hi(self):
-        self.channel.basic_publish(
-            exchange="", routing_key="hello", body="Hello World!"
+        sqs = boto3.resource("sqs", config=Config(region_name="us-east-2"))
+        self.queue = sqs.Queue(
+            "https://sqs.us-east-2.amazonaws.com/061767223458/URLFrontierQueue"
         )
-        print(" [x] Sent 'Hello World!'")
+
+    def receive(self):
+        msgs = self.queue.receive_messages()
+        print(msgs[0].body)
+
+    def send(self):
+        self.queue.send_message(MessageBody="hello adam!!!")
