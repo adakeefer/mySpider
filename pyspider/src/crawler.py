@@ -10,4 +10,5 @@ class Crawler:
 
     def connect(self):
         queue_manager = QueueManager()
+        queue_manager.send()
         queue_manager.receive()
