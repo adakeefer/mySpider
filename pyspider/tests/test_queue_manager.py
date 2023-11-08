@@ -32,12 +32,12 @@ def test_queue_manager_creates_queues(mock_sqs):
 
 
 def test_check_priority_in_range(qmanager):
-    assert qmanager._check_priority_in_range(1) is None
-    assert qmanager._check_priority_in_range(2) is None
+    assert qmanager._check_id_in_range(1) is None
+    assert qmanager._check_id_in_range(2) is None
     with pytest.raises(ValueError):
-        qmanager._check_priority_in_range(0)
+        qmanager._check_id_in_range(0)
     with pytest.raises(ValueError):
-        qmanager._check_priority_in_range(3)
+        qmanager._check_id_in_range(3)
 
 
 def test_send_receive_url_frontier(qmanager):
