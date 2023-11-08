@@ -33,7 +33,7 @@ class QueueManager:
 
     def send_to_prioritizer_n(self, priority: int, message_body: str):
         self._check_priority_in_range(priority)
-        self.url_frontier.send_message(MessageBody=message_body)
+        self.prioritizer_queues[priority].send_message(MessageBody=message_body)
 
     def receive_from_frontier(self, num_messages=1):
         return self.url_frontier.receive_messages(MaxNumberOfMessages=num_messages)

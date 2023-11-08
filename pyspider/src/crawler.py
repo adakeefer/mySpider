@@ -3,12 +3,14 @@ from queue_manager import QueueManager
 
 class Crawler:
     def __init__(self):
-        self.value1 = 1
+        self.queue_manager = QueueManager()
 
-    def say_hi(self):
-        print("Hello!")
+    def receive_frontier_message(self):
+        self.queue_manager.send_to_frontier("https://apple.com")
+        msgs = self.queue_manager.receive_from_frontier()
+        print(msgs[0].body)
 
-    def connect(self):
-        queue_manager = QueueManager()
-        queue_manager.send()
-        queue_manager.receive()
+    def receive_prioritizer_message(self):
+        self.queue_manager.send_to_prioritizer_n(1, "https://wikipedia.com")
+        msgs = self.queue_manager.receive_from_prioritizer_n(1)
+        print(msgs[0].body)
