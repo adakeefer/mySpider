@@ -31,7 +31,7 @@ def test_queue_manager_creates_queues(mock_sqs):
     assert len(qmanager.prioritizer_queues) is 2
 
 
-def test_check_priority_in_range(qmanager):
+def test__check_priority_in_range(qmanager):
     assert qmanager._check_id_in_range(1) is None
     assert qmanager._check_id_in_range(2) is None
     with pytest.raises(ValueError):
@@ -52,3 +52,29 @@ def test_send_receive_prioritizer_n(qmanager):
     msgs = qmanager.receive_from_prioritizer_n(1)
     assert len(msgs) is 1
     assert msgs[0].body == "test"
+
+
+def test__build_delete_request(qmanager):
+    with pytest.raises(ValueError):
+        qmanager._build_delete_request([], [])
+    with pytest.raises(ValueError):
+        qmanager._build_delete_request(["1"], [])
+    with pytest.raises(ValueError):
+        qmanager._build_delete_request(["1"], ["1", "2"])
+    entries = qmanager._build_delete_request(["1", "2"], ["3", "4"])
+    assert entries[0] == {"Id": "1", "ReceiptHandle": "3"}
+    assert entries[1] == {"Id": "2", "ReceiptHandle": "4"}
+
+
+def test_delete_from_frontier(qmanager):
+    qmanager.delete_from_frontier(["1"], ["3"])
+    qmanager.url_frontier.delete_messages.assert_called_with(
+        [{"Id": "1", "ReceiptHandle": "3"}]
+    )
+
+
+def test_delete_from_prioritizer_n(qmanager):
+    qmanager.delete_from_prioritizer_n(1, ["1"], ["3"])
+    qmanager.prioritizer_queues[1].delete_messages.assert_called_with(
+        [{"Id": "1", "ReceiptHandle": "3"}]
+    )

@@ -2,3 +2,4 @@ pika
 pytest
 pytest-mock
 boto3
+requests
