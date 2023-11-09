@@ -1,4 +1,3 @@
-pika
 pytest
 pytest-mock
 boto3

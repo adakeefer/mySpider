@@ -42,10 +42,11 @@ class Prioritizer:
         self.queue_manager.send_to_prioritizer_n(target_queue_id, url)
 
     def _fetch_page_rank(self, url):
-        params = {"domains": [url]}
+        params = {"domains[]": ",".join([url])}
         response = requests.get(
             page_rank_api_url, headers=page_rank_request_headers, params=params
         )
         response.raise_for_status()
         ranks = response.json()["response"]
-        return ranks[0]["page_rank_integer"]
+        return ranks
+        # return ranks[0]["page_rank_integer"]

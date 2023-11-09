@@ -2,7 +2,9 @@
 requires = [
     "hatchling",
     "pytest",
-    "pika"
+    "pytest-mock",
+    "boto3",
+    "requests"
 ]
 build-backend = "hatchling.build"
 
