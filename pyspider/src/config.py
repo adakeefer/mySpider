@@ -7,12 +7,14 @@ class PrioritizerQueueConfig:
 
 prioritizer_queue_configs = [
     PrioritizerQueueConfig(
-        1, "https://sqs.us-east-2.amazonaws.com/061767223458/prioritizerQueue1", 70
+        1, "https://sqs.us-east-2.amazonaws.com/061767223458/prioritizerQueue1", 80
     ),
     PrioritizerQueueConfig(
-        2, "https://sqs.us-east-2.amazonaws.com/061767223458/prioritizerQueue2", 30
+        2, "https://sqs.us-east-2.amazonaws.com/061767223458/prioritizerQueue2", 20
     ),
 ]
+aws_region = "us-east-2"
+url_frontier_url = "https://sqs.us-east-2.amazonaws.com/061767223458/URLFrontierQueue"
 page_rank_api_url = "https://openpagerank.com/api/v1.0/getPageRank"
 page_rank_api_key = "8o4scsssoc44gokcwkk0cw8gg8g0kcwoowwscoso"
 page_rank_request_headers = {"API-OPR": page_rank_api_key}

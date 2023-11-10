@@ -1,14 +1,12 @@
 import boto3
 from botocore.config import Config
-from config import prioritizer_queue_configs as pqconfigs
+import config
 
 
 class QueueManager:
     def __init__(self):
-        self.sqs = boto3.resource("sqs", config=Config(region_name="us-east-2"))
-        self.url_frontier = self.sqs.Queue(
-            "https://sqs.us-east-2.amazonaws.com/061767223458/URLFrontierQueue"
-        )
+        self.sqs = boto3.resource("sqs", config=Config(region_name=config.aws_region))
+        self.url_frontier = self.sqs.Queue(config.url_frontier_url)
         self.prioritizer_queues = self._create_prioritizer_queues()
 
     def receive_from_prioritizer_n(self, queue_id: int, num_messages=1):
@@ -40,7 +38,7 @@ class QueueManager:
 
     def _create_prioritizer_queues(self):
         queues_by_id = {}
-        for qconfig in pqconfigs:
+        for qconfig in config.prioritizer_queue_configs:
             queues_by_id[qconfig.queue_id] = self.sqs.Queue(qconfig.url)
 
         return queues_by_id
