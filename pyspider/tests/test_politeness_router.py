@@ -20,5 +20,5 @@ def test_consume(mocker, mock_qmanager):
     politeness_router = PolitenessRouter()
     mocker.patch("random.choices", return_value=[1])
     politeness_router.consume()
-    mock_qmanager.receive_from_prioritizer_n.assert_called_with(1, num_messages=3)
+    mock_qmanager.receive_from_prioritizer_n.assert_called_with(1, num_messages=5)
     mock_qmanager.delete_from_prioritizer_n.assert_called_with(1, ["1"], ["2"])

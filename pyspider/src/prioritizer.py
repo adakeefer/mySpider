@@ -11,13 +11,14 @@ class Prioritizer:
         self.queue_weights = [x.weight for x in config.prioritizer_queue_configs]
 
     def consume(self):
-        msgs = self.queue_manager.receive_from_frontier(num_messages=3)
+        msgs = self.queue_manager.receive_from_frontier(num_messages=5)
+        if len(msgs) == 0:
+            pass
         msg_ids = []
         receipt_ids = []
         domains = []
         for msg in msgs:
             domains.append(msg.body)
-            print("Prioritizer received url:", msg.body)
             msg_ids.append(msg.message_id)
             receipt_ids.append(msg.receipt_handle)
 
@@ -27,9 +28,10 @@ class Prioritizer:
                 self.publish(target_queue_id, url)
 
         self.queue_manager.delete_from_frontier(msg_ids, receipt_ids)
-        print("Prioritizer removed messages")
 
     def prioritize(self, domains):
+        if len(domains) == 0:
+            return {}
         try:
             page_rank = self._fetch_page_rank(domains)
         except Exception as e:

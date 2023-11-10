@@ -86,7 +86,7 @@ def test_consume(mock_qmanager, mocker, mock_random):
     mock_page_rank_call(mocker, ["test.com", "name.com"])
     ptizer = Prioritizer()
     ptizer.consume()
-    mock_qmanager.receive_from_frontier.assert_called_with(num_messages=3)
+    mock_qmanager.receive_from_frontier.assert_called_with(num_messages=5)
     mock_qmanager.send_to_prioritizer_n.assert_any_call(1, "test.com")
     mock_qmanager.send_to_prioritizer_n.assert_any_call(1, "name.com")
     mock_qmanager.delete_from_frontier.assert_called_with(["1", "3"], ["2", "4"])
