@@ -1,6 +1,7 @@
 from prioritizer import Prioritizer
 from politeness_router import PolitenessRouter
 from queue_manager import QueueManager
+from cache_manager import CacheManager
 import time
 
 TEST_URLS = ["wikipedia.com", "apple.com", "google.com", "domcop.com"]
@@ -29,10 +30,18 @@ def prioritize_with_queues(
     router.consume()
 
 
+def check_cache():
+    cache = CacheManager()
+    cache.put("google.com", 1)
+    print(f'pulling from cache: {cache.get("google.com")}')
+    print(f'not in cache: {cache.get("garbage")}')
+
+
 if __name__ == "__main__":
     # inspect sys.argv here
     qManager = QueueManager()
     prioritizer = Prioritizer()
     politeness_router = PolitenessRouter()
     print("Sending msg:", TEST_URLS)
-    prioritize_with_queues(qManager, prioritizer, politeness_router)
+    check_cache()
+    # prioritize_with_queues(qManager, prioritizer, politeness_router)

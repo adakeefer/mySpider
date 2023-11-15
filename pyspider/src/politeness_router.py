@@ -9,6 +9,9 @@ class PolitenessRouter:
         self.prioritizer_queue_keys = [
             x.queue_id for x in config.prioritizer_queue_configs
         ]
+        self.prioritizer_queue_weights = [
+            x.weight for x in config.prioritizer_queue_configs
+        ]
 
     def consume(self):
         queue_id = self._choose_random_queue()
@@ -25,4 +28,6 @@ class PolitenessRouter:
         self.queue_manager.delete_from_prioritizer_n(queue_id, msg_ids, receipt_ids)
 
     def _choose_random_queue(self):
-        return random.choices(self.prioritizer_queue_keys)[0]
+        return random.choices(
+            self.prioritizer_queue_keys, self.prioritizer_queue_weights
+        )[0]

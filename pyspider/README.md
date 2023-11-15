@@ -1,2 +1,1 @@
-# Usage
-blah
+# Setup

@@ -18,3 +18,6 @@ url_frontier_url = "https://sqs.us-east-2.amazonaws.com/061767223458/URLFrontier
 page_rank_api_url = "https://openpagerank.com/api/v1.0/getPageRank"
 page_rank_api_key = "8o4scsssoc44gokcwkk0cw8gg8g0kcwoowwscoso"
 page_rank_request_headers = {"API-OPR": page_rank_api_key}
+redis_port = 6379
+redis_host = "localhost"
+redis_default_expiry_seconds = 60

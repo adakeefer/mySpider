@@ -1,4 +1,3 @@
-# define the name of the virtual environment directory
 VENV := venv
 
 all: venv
@@ -16,14 +15,16 @@ install:
 tests:
 	./$(VENV)/bin/python3 -m pytest
 
-rabbitmq:
-	docker run -d --hostname rabbit --name rabbit rabbitmq:3
+cache:
+	redis-stack-server --daemonize yes
+	sleep 1
 
-run: venv
+run: venv cache
 	./$(VENV)/bin/python3 src
 
 clean:
 	rm -rf $(VENV)
 	find . -type f -name '*.pyc' -delete
+	redis-cli shutdown
 
-.PHONY: all install venv tests rabbitmq run clean
+.PHONY: all install venv tests cache run clean
