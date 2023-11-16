@@ -4,7 +4,12 @@ from queue_manager import QueueManager
 from cache_manager import CacheManager
 import time
 
-TEST_URLS = ["wikipedia.com", "apple.com", "google.com", "domcop.com"]
+TEST_URLS = [
+    "http://www.wikipedia.com",
+    "http://www.apple.com",
+    "http://www.google.com/maps",
+    "http://www.domcop.com/openpagerank/documentation",
+]
 
 
 def random_priority(ptizer: Prioritizer):
@@ -43,5 +48,4 @@ if __name__ == "__main__":
     prioritizer = Prioritizer()
     politeness_router = PolitenessRouter()
     print("Sending msg:", TEST_URLS)
-    check_cache()
-    # prioritize_with_queues(qManager, prioritizer, politeness_router)
+    prioritize_with_queues(qManager, prioritizer, politeness_router)
